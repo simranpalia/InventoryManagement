@@ -1,0 +1,29 @@
+﻿@model InventoryManagement.Models.SaleViewModel
+@using HtmlHelpers.BeginCollectionItem;
+@using (Html.BeginCollectionItem("Sales"))
+{
+    <div class="div_@ViewBag.Counter">
+        <div class="form-group">
+            <div class="col-sm-12">
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.SoldOn)
+
+                <label class="control-label col-sm-2">
+                    Select Product
+                </label>
+                <div class="col-sm-3">
+                    @Html.DropDownListFor(x => x.ProductId, new SelectList(Model.LoadProducts(), "Value", "Text"), "--Select--", new { @class = "form-control" })
+                </div>
+                <label class="control-label col-sm-2">
+                    Quantity
+                </label>
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(x => x.Quantity, new SelectList(Enumerable.Range(1, 20)), "--Select--", new { @class = "form-control", onchange = "calculateAmount(this," + @ViewBag.Counter + ");" })
+                </div>
+                <div class="col-sm-2">
+                    <a href="javascript:;" onclick="removeSale(this,@ViewBag.Counter);"><i class="glyphicon glyphicon-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

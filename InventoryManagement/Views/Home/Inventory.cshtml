@@ -1,0 +1,63 @@
+﻿@model InventoryManagement.Models.InventoryWrapper
+@{
+    ViewBag.Title = "Inventory";
+}
+<br />
+<div class="form-horizontal">
+    <div class="form-group">
+        <a href="/Home/AddInventory" class="btn btn-primary">Add stock</a>
+    </div>
+    <div class="form-group">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Vendor
+                    </th>
+                    <th>
+                        In Stock
+                    </th>
+                    <th>
+                        Sold
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @item.ProductName
+                        </td>
+                        <td>
+                            @item.Price
+                        </td>
+                        <td>
+                            @item.VendorName
+                        </td>
+                        <td>
+                            @item.InStock
+                        </td>
+                        <td>
+                            @item.Sold
+                        </td>
+                        <td>
+                            <a href="javascript:;">Edit</a> |
+                            <a href="javascript:;">Report</a> |
+                            <a href="javascript:;">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model InventoryManagement.Models.SalesWrapper
+@{
+    ViewBag.Title = "Report";
+}
+<br />
+<div class="form-horizontal">
+    <div class="form-group">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Receipt No
+                    </th>
+                    <th>
+                        Product
+                    </th>
+                    <th>
+                        Qty
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Sold On
+                    </th>
+                    <th>
+                        Sold By
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Sales)
+                {
+                    <tr>
+                        <td>
+                            @item.InvoiceNumber
+                        </td>
+                        <td>
+                            @item.ProductName
+                        </td>
+                        <td>
+                            @item.Quantity
+                        </td>
+                        <td>
+                            @item.Amount
+                        </td>
+                        <td>
+                            @item.SoldOn
+                        </td>
+                        <td>
+                            @item.SoldBy
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

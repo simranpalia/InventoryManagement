@@ -1,0 +1,85 @@
+﻿@model InventoryManagement.Models.SaleViewModel
+@{
+    ViewBag.Title = "Sale";
+}
+<br />
+<div class="form-horizontal">
+    <div class="form-group">
+        <a href="/Home/CreateSale" class="btn btn-primary">Multiple Items</a>
+    </div>
+    <div class="form-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Sale
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Sale", "Home", FormMethod.Post))
+                {
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.SoldOn)
+
+                        <label class="control-label col-sm-2">
+                            Select Product
+                        </label>
+                        <div class="col-sm-10">
+                            @Html.DropDownListFor(x => x.ProductId, new SelectList(Model.LoadProducts(), "Value", "Text"), "--Select--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label class="control-label col-sm-2">
+                            Quantity
+                        </label>
+                        <div class="col-sm-10">
+                            @Html.DropDownListFor(x => x.Quantity, new SelectList(Enumerable.Range(1, 20)), "--Select--", new { @class = "form-control", onchange = "calculateAmount();" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label class="control-label col-sm-2">
+                            Remarks
+                        </label>
+                        <div class="col-sm-10">
+                            <label class="control-label amount_label">RM 0</label>
+                            @Html.HiddenFor(x => x.Amount)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="col-sm-offset-2">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        function calculateAmount() {
+            $.ajax({
+                url: '/Home/CalculateAmount',
+                type: 'POST',
+                beforeSend: function () { $(".amount_label").text(""); $(".amount_label").text("Calculating..."); $("#Amount").val(""); },
+                data: { productId: $("#ProductId").val(), quantity: $("#Quantity").val() },
+                success: function (amt) {
+                    $(".amount_label").text("RM " + amt);
+                    $("#Amount").val(amt);
+                },
+            });
+        }
+
+    </script>
+}
